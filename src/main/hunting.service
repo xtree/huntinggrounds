@@ -1,0 +1,13 @@
+[Unit]
+Description=Hunting Grounds service
+
+[Service]
+WorkingDirectory=/home/pi/hunting/
+ExecStart=/usr/bin/java -jar /home/pi/hunting/huntingrounds-0.9.jar
+User=pi
+Type=simple
+Restart=on-failure
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hunting grounds - admin home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div th:if="${message}">
+    <p th:text="'Hello, ' + ${message}"/>
+</div>
+
+<div>
+    <a href='/admin/users'>users</a>
+    <br>
+    <a href='/admin/spots'>spots</a>
+    <br>
+    <a href='/admin/logs'>logs</a>
+</div>
+</body>
+</html>

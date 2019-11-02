@@ -1,0 +1,21 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    properties.hibernate.format_sql: true
+    properties.hibernate.show_sql: false
+  datasource:
+    url: "jdbc:postgresql://10.4.0.16:5432/huntingrounds"
+#    url: "jdbc:postgresql://localhost:5432/huntingrounds"
+    username: hunting
+    password: H21Mex
+  queries:
+#    users-query: select username, password, '1' as active from hunter where username= ?
+    users-query: "select hunter.username as username, hunter.password as password, '1' as enabled from hunter where hunter.username=?"
+    roles-query: "select hunter.username, hunter.role from hunter where hunter.username=?"
+logging:
+  level:
+    org.hibernate.engine.jdbc.env.internal.LobCreatorBuilderImpl: ERROR
+    org.hibernate.SQL: INFO

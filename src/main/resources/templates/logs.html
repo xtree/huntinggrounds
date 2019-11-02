@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hunting grounds - logs</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<div th:if="${message}">
+    <p th:text="${message}"/>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th> Date</th>
+        <th> Message</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${logs.empty}">
+        <td colspan="2"> No Logs Available</td>
+    </tr>
+    <tr th:each="log : ${logs}">
+        <table >
+            <tbody>
+            <tr>
+                <td>
+                    <div th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
+
+                        <span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(log.time, timeZone)}"></span>
+
+                    </div>
+                </td>
+                <td><span th:text="${log.message}"> message </span></td>
+            </tr>
+            </tbody>
+        </table>
+    </tr>
+    </tbody>
+</table>
+<br>
+<a href='/admin'>HOUM</a>
+<br>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>
