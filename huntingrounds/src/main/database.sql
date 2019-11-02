@@ -1,3 +1,0 @@
---create user hunting;
---alter user hunting with encrypted password 'H21Mex';
---grant all privileges on database huntingrounds to hunting;
