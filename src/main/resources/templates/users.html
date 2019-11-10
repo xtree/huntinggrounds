@@ -3,6 +3,15 @@
 <head>
     <title>Hunting grounds - admin users</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script type="text/javascript">
+    $(document).on('submit', 'form[data-confirm]', function(e){
+    if(!confirm($(this).data('confirm'))){
+        e.stopImmediatePropagation();
+        e.preventDefault();
+     }
+    });
+</script>
 </head>
 <body>
 <p th:text="'Hello admin, ' + ${name} + '!'" />
@@ -17,6 +26,7 @@
         <th> Hunter </th>
         <th> Might </th>
         <th> Limit </th>
+        <th> Exchange rate </th>
     </tr>
     </thead>
     <tbody>
@@ -32,9 +42,10 @@
                 <form th:action="@{'/admin/updateuser/'+${hunter.id}}" th:object="${hunter}" method="post">
                     <td width=100><input type="text" name="might" th:value="${hunter.might}"></td>
                     <td width=100><input type="text" name="limit" th:value="${hunter.limit}"></td>
+                    <td width=100><input type="text" name="exchange_rate" th:value="${hunter.exchange_rate}"></td>
                     <td width=100><input type="submit" value="update"/></td>
                 </form>
-                <form th:action="@{'/admin/deleteuser/'+${hunter.id}}" th:object="${hunter}" method="post">
+                <form th:action="@{'/admin/deleteuser/'+${hunter.id}}" th:object="${hunter}" method="post"  data-confirm="Do you really want to delete user?">
                     <td width=100><input type="submit" value="DELETE"/></td>
                 </form>
             </tr>

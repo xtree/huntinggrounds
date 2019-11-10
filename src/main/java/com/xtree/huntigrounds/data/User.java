@@ -24,6 +24,9 @@ public class User {
     @Column(name = "might")
     private int might;
 
+    @Column(name = "exchange_rate")
+    private int exchange_rate;
+
     @Column(name = "area_limit")
     private int limit;
 
@@ -73,6 +76,14 @@ public class User {
 
     public void setMight(int might) {
         this.might = might;
+    }
+
+    public int getExchange_rate() {
+        return exchange_rate;
+    }
+
+    public void setExchange_rate(int exchange_rate) {
+        this.exchange_rate = exchange_rate;
     }
 
     public int getLimit() {

@@ -36,6 +36,30 @@ public class UserEndpointController {
         return "user";
     }
 
+    @RequestMapping(value={"lowermight"})
+    public String lowerMight(@RequestParam(name = "exchanged_might") int exchangedMight, Model model, Principal principal) {
+        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
+        String username = token.getName();
+        UserService service = appContext.getBean(UserService.class);
+        LogService logService = appContext.getBean(LogService.class);
+
+        model.addAttribute("name", username);
+        User user = service.getUser(username);
+        int loweredMight = user.getExchange_rate() * (exchangedMight/user.getExchange_rate());
+        if ((user.getMight() > loweredMight) && (loweredMight >= 0)) {
+            user.setMight(user.getMight() - loweredMight);
+            service.saveUser(user);
+            logService.saveLog(user.getUsername(), "exchanged "+loweredMight+ " might units for " + loweredMight / user.getExchange_rate() +" euros");
+            model.addAttribute("message", "You EXCHANGED "+loweredMight+ " might units for " + loweredMight / user.getExchange_rate() +" euros");
+        } else
+        {
+            logService.saveLog(user.getUsername(), "tried to exchange " + exchangedMight );
+            model.addAttribute("message", "invalid  - incident will be logged ");
+        }
+        model.addAttribute("hunter", user);
+        return "user";
+    }
+
 
 
     @GetMapping("/spot")

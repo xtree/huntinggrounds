@@ -3,10 +3,25 @@
 <head>
     <title>Hunting grounds - user profile</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script type="text/javascript">
+    $(document).on('submit', 'form[data-confirm]', function(e){
+    if(!confirm($(this).data('confirm'))){
+        e.stopImmediatePropagation();
+        e.preventDefault();
+     }
+    });
+</script>
 </head>
+
 <body>
-<p th:text="'Hello, ' + ${hunter.username} + ' you have ' + ${hunter.might} + ' units of universe power'" />
+<p th:text="'Hello, ' + ${hunter.username} + ' you have ' + ${hunter.might} + ' units of might'" />
 <p th:text="'and you are limited to ' + ${hunter.limit} + ' hunting grounds'"/>
+<p th:text="'your might exchange rate  is ' + ${hunter.exchange_rate} + 'might units /euro' "/>
+
+<div th:if="${message}">
+    <p th:text="${message}" />
+</div>
 
 <p >Owned:</p>
 <table>
@@ -40,6 +55,10 @@
     </tbody>
 </table>
 
+<form  th:if="${ !hunter.spotsOwned.empty}" th:action="@{'/lowermight'}" method="post" data-confirm="Are you sure with the exchange?">
+    <input type="text" name="exchanged_might" th:value="${hunter.might}">
+    <input type="submit" value="exchange"/>
+</form>
 
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
