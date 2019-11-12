@@ -1,8 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Hunting grounds - logs</title>
+    <title>Loviště - logy</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+			<LINK REL=StyleSheet HREF="shreck.css" TYPE="text/css" MEDIA=screen>
 </head>
 <body>
 
@@ -13,13 +14,13 @@
 <table>
     <thead>
     <tr>
-        <th> Date</th>
-        <th> Message</th>
+        <th> Datum</th>
+        <th> Zpráva</th>
     </tr>
     </thead>
     <tbody>
     <tr th:if="${logs.empty}">
-        <td colspan="2"> No Logs Available</td>
+        <td colspan="2"> Žádné logy neexistují</td>
     </tr>
     <tr th:each="log : ${logs}">
         <table >
@@ -32,7 +33,7 @@
 
                     </div>
                 </td>
-                <td><span th:text="${log.message}"> message </span></td>
+                <td><span th:text="${log.message}"> Zpráva </span></td>
             </tr>
             </tbody>
         </table>
@@ -40,7 +41,7 @@
     </tbody>
 </table>
 <br>
-<a href='/admin'>HOUM</a>
+<a href='/admin'>Domů</a>
 <br>
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
