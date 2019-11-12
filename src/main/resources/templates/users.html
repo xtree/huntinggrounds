@@ -1,8 +1,9 @@
-<!DOCTYPE HTML>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Hunting grounds - admin users</title>
+    <title>Administrace uživatelů</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+				<LINK REL=StyleSheet HREF="shreck.css" TYPE="text/css" MEDIA=screen>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script type="text/javascript">
     $(document).on('submit', 'form[data-confirm]', function(e){
@@ -14,7 +15,8 @@
 </script>
 </head>
 <body>
-<p th:text="'Hello admin, ' + ${name} + '!'" />
+<div align="center">
+<p th:text="'Přihlášen admin, ' + ${name} + '!'"/>
 <div th:if="${message}">
     <p th:text="${message}"/>
 </div>
@@ -23,37 +25,36 @@
 <table>
     <thead>
     <tr>
-        <th> Hunter </th>
-        <th> Might </th>
+        <th> Lovec </th>
+        <th> Síla </th>
         <th> Limit </th>
-        <th> Exchange rate </th>
+        <th> poměr moc/eura </th>
     </tr>
     </thead>
     <tbody>
     <tr th:if="${users.empty}">
-        <td colspan="2"> No Hunters Available </td>
+        <td colspan="2"> Lovci nejsou </td>
     </tr>
     <tr th:each="hunter : ${users}">
-
         <table>
             <tbody>
             <tr>
-                <td width=100><span th:text="${hunter.username}"> Title </span></td>
+                <td width=100><span th:text="${hunter.username}"> Lovec </span></td>
                 <form th:action="@{'/admin/updateuser/'+${hunter.id}}" th:object="${hunter}" method="post">
-                    <td width=100><input type="text" name="might" th:value="${hunter.might}"></td>
-                    <td width=100><input type="text" name="limit" th:value="${hunter.limit}"></td>
-                    <td width=100><input type="text" name="exchange_rate" th:value="${hunter.exchange_rate}"></td>
-                    <td width=100><input type="submit" value="update"/></td>
+                    <td width=100>Síla:<br><input type="text" name="might" th:value="${hunter.might}"></td>
+                    <td width=100>Limit:<br><input type="text" name="limit" th:value="${hunter.limit}"></td>
+                    <td width=100>m/e:<br><input type="text" name="exchange_rate" th:value="${hunter.exchange_rate}"></td>
+                    <td width=100><input type="submit" value="Aktualizovat"/></td>
                 </form>
-                <form th:action="@{'/admin/deleteuser/'+${hunter.id}}" th:object="${hunter}" method="post"  data-confirm="Do you really want to delete user?">
-                    <td width=100><input type="submit" value="DELETE"/></td>
+                <form th:action="@{'/admin/deleteuser/'+${hunter.id}}" th:object="${hunter}" method="post"  data-confirm="Opravdu Chceš smazat uživatele?">
+                    <td width=100><input type="submit" value="SMAZAT"/></td>
                 </form>
             </tr>
             <tr th:each="pwning : ${hunter.pwnings}">
                 <td width=100 ></td>
-                <td ><span th:text="${pwning.code.address}"> place </span></td>
+                <td ><span th:text="${pwning.code.address}"> zabírá místo </span></td>
                 <td width=200 th:if="${pwning.code.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
-                    <span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(pwning.code.randevouz, timeZone)}"> Time </span>
+                    <span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(pwning.code.randevouz, timeZone)}"> doba záboru </span>
                 </td>
             </tr>
             </tbody>
@@ -61,15 +62,19 @@
     </tr>
     </tbody>
 </table>
+<br>
 <form th:action="@{/admin/adduser}" method="post">
     <input type="text" name="username">
-    <input type="submit" value="add user"/>
+    <input type="submit" value="Přidat uživatele"/>
 </form>
 <br>
-<a href='/admin'>HOUM</a>
+<a href='/admin'>Domů</a>
+<br>
+<br>
 <br>
 <form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
+    <input type="submit" value="Odhlásit se"/>
 </form>
 </body>
+</div>
 </html>

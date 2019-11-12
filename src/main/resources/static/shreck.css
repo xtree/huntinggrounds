@@ -1,0 +1,50 @@
+table {
+    border-color: black;
+    border-style: inset;
+    border-width: thick;
+    background: url(back.jpg);
+ 
+    }
+table#header {
+    border-color: black;
+    border-style: inset;
+    border-width: thin;
+    background: url(header.jpg);
+    font-size: 13pt;
+    font-weight:700
+    }
+
+body {
+	background-color: black;
+	color: #aaaaaa 
+    	}
+
+a:link { color: #eeee11 }
+a:visited { color: #eeffaa }
+
+td#kart {
+    color: red;
+    border: thin dotted green; 
+}
+td#druh
+    {
+    color: red;
+    text-align:center;
+    }
+    
+td#klan
+    {
+    color: #FF0000;
+    text-align:center;
+    }
+
+tr#select
+    {
+    
+    border: thin inset green;
+    }
+td#header
+    {
+    text-align:center;
+    font-size:17pt
+    }

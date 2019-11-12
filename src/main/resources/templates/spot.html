@@ -1,38 +1,40 @@
-<!DOCTYPE HTML>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Hunting grounds - spot information</title>
+    <title>Informace o lovišti</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+				<LINK REL=StyleSheet HREF="shreck.css" TYPE="text/css" MEDIA=screen>
 </head>
 <body>
+<div align = "center">
 <p th:text="
-'Hello, ' + ${name} + ' you are on hunting place '+
- ${spot.code} + ' that provides <br>' +
- ${spot.might} + ' units of universe power per day <br>' +
+'Ahoj, ' + ${name} + ' jsi na lovišti '+
+ ${spot.code} + ' které produkuje <br>' +
+ ${spot.might} + ' bodů moci za den <br>' +
  ${spot.address} + '<br>' +
  ${spot.description}
 " />
-
+<br />
 <div th:if="${owner}">
-    <p th:text="'owner is '+${owner}" />
+    <p th:text="'aktuální vlastník je '+${owner}" />
 </div>
 <div th:if="${message}">
     <p th:text="${message}" />
 </div>
-
-
+<br />
 <form th:action="@{/hunt}" method="get">
     <input type="hidden" name="code" th:value="${spot.code}" />
-    <input type="submit" value="FIGHT"/>
+    <input type="submit" value="ZABRAT!"/>
 </form>
-
+<br />
+<br />
 <form th:action="@{/user}" method="get">
-    <input type="submit" value="WITHDRAW"/>
+    <input type="submit" value="SRABSKY JEJ OPUSTIT"/>
 </form>
 
 <br>
-<a href='/'>HOUM</a>
+<a href='/'>Zpět domů</a>
 <br>
-
+</div>
 </body>
 </html>

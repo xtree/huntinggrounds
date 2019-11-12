@@ -1,20 +1,25 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Hunting grounds - login</title>
+    <title>Loviště - login</title>
+		<LINK REL=StyleSheet HREF="shreck.css" TYPE="text/css" MEDIA=screen>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
+<div align="center">
+<img style="border:0" src="img/ztracenepripady.png" alt="No rest for the wicked." title="No rest for the wicked.">
 <div th:if="${param.error}">
-    Invalid username and password.
+    Špatné jméno nebo heslo.
 </div>
 <div th:if="${param.logout}">
-    You have been logged out.
-</div>
+    Odhlášeno, jdi a užívej zbytku života.
+</div><br />
 <form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
+    <div><label>Jméno: <input type="text" name="username"/> </label> &nbsp;&nbsp;<label>Heslo: <input type="password" name="password"/> </label></div>
+		<br />
+    <div><input type="submit" value="Přihlásit se"/></div>
 </form>
+</div>
 </body>
 </html>

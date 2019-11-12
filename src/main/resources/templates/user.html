@@ -1,8 +1,9 @@
-<!DOCTYPE HTML>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Hunting grounds - user profile</title>
+    <title>Loviště - profil</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+				<LINK REL=StyleSheet HREF="shreck.css" TYPE="text/css" MEDIA=screen>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script type="text/javascript">
     $(document).on('submit', 'form[data-confirm]', function(e){
@@ -15,53 +16,58 @@
 </head>
 
 <body>
-<p th:text="'Hello, ' + ${hunter.username} + ' you have ' + ${hunter.might} + ' units of might'" />
-<p th:text="'and you are limited to ' + ${hunter.limit} + ' hunting grounds'"/>
-<p th:text="'your might exchange rate  is ' + ${hunter.exchange_rate} + 'might units /euro' "/>
+<div align="center">
+<p th:text="'Ahoj, ' + ${hunter.username}" />
 
 <div th:if="${message}">
     <p th:text="${message}" />
 </div>
 
-<p >Owned:</p>
+<p >Loviště vlastněná:</p>
 <table>
     <tbody>
     <tr th:if="${hunter.spotsOwned.empty}">
-        <td colspan="2"> No Spots Owned</td>
+        <td colspan="2"> Nic nemáš!</td>
     </tr>
     <tr th:each="spot : ${hunter.spotsOwned}">
-        <td width=100><span th:text="${spot.code}"> Spot Code </span></td>
-        <td width=100><span th:text="${spot.might}"> Might </span></td>
-        <td width=150><span th:text="${spot.address}"> Place </span></td>
-        <td width=300><span th:text="${spot.description}"> Description </span></td>
-        <td width=200 th:if="${spot.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
-            <span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(spot.randevouz, timeZone)}"> Time </span>
+        <td width=100><span th:text="${spot.code}"> Kód </span></td>
+        <td width=50><span th:text="${spot.might}"> Síla </span></td>
+        <td width=150><span th:text="${spot.address}"> Místo </span></td>
+        <td width=200><span th:text="${spot.description}"> Popis </span></td>
+        <td width=100 th:if="${spot.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
+            <span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(spot.randevouz, timeZone)}"> Čas záboru </span>
         </td>
     </tr>
     </tbody>
 </table>
-<p>Atacked:</p>
+<p>Loviště zabíraná:</p>
 <table>
     <tbody>
     <tr th:if="${hunter.pwnings.empty}">
-        <td colspan="2"> No attacked spots</td>
+        <td colspan="2"> Nic takového se neděje.</td>
     </tr>
     <tr th:each="pwning : ${hunter.pwnings}">
-        <td width=150><span th:text="${pwning.code.address}"> Place </span></td>
-        <td width=100><span th:text="${pwning.code.might}"> Might </span></td>
-        <td width=300><span th:text="${pwning.code.description}"> Description </span></td>
-        <td width=200 th:if="${pwning.code.randevouz != null}"><span th:text="${pwning.code.randevouz}"> Time </span></td>
+        <td width=150><span th:text="${pwning.code.address}"> Místo </span></td>
+        <td width=50><span th:text="${pwning.code.might}"> Síla </span></td>
+        <td width=200><span th:text="${pwning.code.description}"> Popis </span></td>
+        <td width=100 th:if="${pwning.code.randevouz != null}"><span th:text="${pwning.code.randevouz}"> Čas záboru </span></td>
     </tr>
     </tbody>
 </table>
+<p th:text="'Můžeš vlastnit a zabírat úhrně maximálně ' + ${hunter.limit} + 'lovišť'"/>
 
-<form  th:if="${ !hunter.spotsOwned.empty}" th:action="@{'/lowermight'}" method="post" data-confirm="Are you sure with the exchange?">
+<br / >
+<p th:text="'Máš have ' + ${hunter.might} + ' bodů moci'" />
+<p th:text="'Možno proměnit za eura v poměru' + ${hunter.exchange_rate} + 'moc/euro' "/>
+<form  th:if="${ !hunter.spotsOwned.empty}" th:action="@{'/lowermight'}" method="post" data-confirm="Jsi si jistá/ý že chceš výměnu provést?">
     <input type="text" name="exchanged_might" th:value="${hunter.might}">
-    <input type="submit" value="exchange"/>
+    <input type="submit" value="Provést výměnu"/>
 </form>
 
+<br / >
 <form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
+    <input type="submit" value="Odhlásit se"/>
 </form>
+</div>
 </body>
 </html>
