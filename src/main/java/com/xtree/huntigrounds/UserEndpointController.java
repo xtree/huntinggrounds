@@ -50,11 +50,11 @@ public class UserEndpointController {
             user.setMight(user.getMight() - loweredMight);
             service.saveUser(user);
             logService.saveLog(user.getUsername(), "exchanged "+loweredMight+ " might units for " + loweredMight / user.getExchange_rate() +" euros");
-            model.addAttribute("message", "You EXCHANGED "+loweredMight+ " might units for " + loweredMight / user.getExchange_rate() +" euros");
+            model.addAttribute("message", "Právě jsi vyměnil "+loweredMight+ " bodů moci za " + loweredMight / user.getExchange_rate() +" eur");
         } else
         {
             logService.saveLog(user.getUsername(), "tried to exchange " + exchangedMight );
-            model.addAttribute("message", "invalid  - incident will be logged ");
+            model.addAttribute("message", "neplatné  - incident bude zalogován ");
         }
         model.addAttribute("hunter", user);
         return "user";

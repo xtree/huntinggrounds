@@ -150,7 +150,7 @@ public class AdminEndpointController {
             model.addAttribute("message", e.getMessage());
             return "adminmessage";
         }
-        model.addAttribute("message", "successfully removed");
+        model.addAttribute("message", "uspesne odstranen");
         logService.saveLog(username,"removed userid "+ id );
         return "adminmessage";
     }
