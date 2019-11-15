@@ -22,7 +22,8 @@ body {
 a:link { color: #eeee11 }
 a:visited { color: #eeffaa }
 
-td {
+td#kart {
+    color: red;
     border: thin dotted green; 
 }
 td#druh
