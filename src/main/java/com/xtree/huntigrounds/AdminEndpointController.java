@@ -58,13 +58,14 @@ public class AdminEndpointController {
             @RequestParam(name="place") String place,
             @RequestParam(name="might") int might,
             @RequestParam(name="description") String description,
+            @RequestParam(name="enabled", defaultValue = "false" ) boolean enabled,
             Model model, Principal principal) {
         UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
         String username = token.getName();
         SpotService service = appContext.getBean(SpotService.class);
         LogService logService = appContext.getBean(LogService.class);
         try{
-            service.modifySpot(might,place,description,code);
+            service.modifySpot(might,place,description, enabled, code);
         }
         catch (Exception e)
         {

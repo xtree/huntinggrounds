@@ -88,9 +88,13 @@ public class UserEndpointController {
         User user = userService.getUser(username);
         Spot spot = spotService.getSpot(code);
 
-        HuntChecker huntChecker = new HuntChecker();
-        huntChecker.doEverythig(model, spotService, pwningService, logService, user, spot);
-
+        if (spot.isEnabled()) {
+            HuntChecker huntChecker = new HuntChecker();
+            huntChecker.doEverythig(model, spotService, pwningService, logService, user, spot);
+        } else {
+            model.addAttribute("message", "Toto místo moci se mění, nelze o něj soupeřit.");
+            logService.saveLog(username, "tried to attack disabled spot");
+        }
         model.addAttribute("name", user.getUsername());
         model.addAttribute("spot", spot);
         return "spot";

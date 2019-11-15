@@ -41,6 +41,9 @@
                     <td width=200>
                         <input type="text" name="description" th:value="${spot.description}">
                     </td>
+                    <td width=20>
+                        <input type="checkbox" name="enabled" th:checked="${spot.enabled}">
+                    </td>
                     <td width=150 th:if="${spot.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
                         <span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(spot.randevouz, timeZone)}"> Čas záboru </span>
                     </td>

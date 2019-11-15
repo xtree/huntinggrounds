@@ -29,7 +29,7 @@ public class SpotService {
         return spotRepository.findByCode(code);
     }
 
-    public void modifySpot(int might, String place, String description, String code){
-        spotRepository.setPlaceDetailsByCode(might,place,description,code);
+    public void modifySpot(int might, String place, String description, boolean enabled, String code){
+        spotRepository.setPlaceDetailsByCode(might,place,description, enabled, code);
     }
 }

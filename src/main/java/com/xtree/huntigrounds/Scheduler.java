@@ -17,7 +17,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 @Component
-public class Scheduler{
+public class Scheduler {
 
     @Autowired
     UserService service;
@@ -37,9 +37,10 @@ public class Scheduler{
         System.out.println(Instant.now().toString()+" tick");
         for (User user : service.allUsers()){
             int deltaMight = 0;
-            for ( Spot spot: user.getSpotsOwned())
-            {
-                deltaMight += spot.getMight() / (24*6);
+            for (Spot spot : user.getSpotsOwned()) {
+                if (spot.isEnabled()) {
+                    deltaMight += spot.getMight() / (24 * 6);
+                }
             }
             if (deltaMight != 0) {
                 user.setMight(user.getMight() + deltaMight);
@@ -52,18 +53,18 @@ public class Scheduler{
     @Scheduled(cron="0 * * * * *")
     public void clearPwnings() {
         //get all spots
-        for (Spot spot : spotsService.allSpots()){
-            if (spot.getRandevouz()!=null && spot.getRandevouz()
+        for (Spot spot : spotsService.allSpots()) {
+            if (spot.getRandevouz() != null && spot.getRandevouz()
                     .before(
                             Date.from(
                                     Instant.now().minus(Duration.ofMinutes(10))
                             )
                     )
-            ){
+            ) {
                 spot.setRandevouz(null);
                 removePwnings(spot);
                 spotsService.saveSpot(spot);
-                logService.saveLog(spot.getOwner()!=null ? spot.getOwner().getUsername(): "Nobody" ,"successfully defended his territory");
+                logService.saveLog(spot.getOwner() != null ? spot.getOwner().getUsername() : "Nobody", "successfully defended his territory");
             }
         }
     }
