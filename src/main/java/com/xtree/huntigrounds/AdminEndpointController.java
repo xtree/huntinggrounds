@@ -59,22 +59,22 @@ public class AdminEndpointController {
             @RequestParam(name="might") int might,
             @RequestParam(name="description") String description,
             @RequestParam(name="enabled", defaultValue = "false" ) boolean enabled,
+            @RequestParam(name="owner", defaultValue = "" ) String ownerName,
             Model model, Principal principal) {
         UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
         String username = token.getName();
         SpotService service = appContext.getBean(SpotService.class);
         LogService logService = appContext.getBean(LogService.class);
+        UserService userService = appContext.getBean(UserService.class);
+
         try{
-            service.modifySpot(might,place,description, enabled, code);
+            User owner = ownerName == ""? null : userService.getUser(ownerName);
+            service.modifySpot(might,place,description, enabled, owner, code);
         }
         catch (Exception e)
         {
             model.addAttribute("message", e.getMessage());
         }
-
-
-
-
         model.addAttribute("name", username);
         model.addAttribute("spots",service.allSpots());
         logService.saveLog(username, "changes spot m: "+might+" pl: "+ place + " desc: "+description +" code: "+code);
