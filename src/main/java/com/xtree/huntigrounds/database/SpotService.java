@@ -32,4 +32,8 @@ public class SpotService {
     public void modifySpot(int might, String place, String description, boolean enabled, String code){
         spotRepository.setPlaceDetailsByCode(might,place,description, enabled, code);
     }
+
+    public void deleteSpot(String code){
+        spotRepository.deleteByCode(code);
+    }
 }

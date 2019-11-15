@@ -17,4 +17,9 @@ public interface SpotRepository extends JpaRepository<Spot, Long> {
     @Transactional
     @Query("update Spot s set s.might = ?1, s.address = ?2 , s.description = ?3 , s.enabled = ?4 where s.code = ?5")
     void setPlaceDetailsByCode(int might, String address, String description, boolean enabled, String code);
+
+    @Modifying
+    @Transactional
+    @Query("delete from Spot s where s.code = ?1")
+    void deleteByCode(String code);
 }

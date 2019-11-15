@@ -156,6 +156,28 @@ public class AdminEndpointController {
         return "adminmessage";
     }
 
+    @RequestMapping(value = "/admin/deletespot/{code}", method = RequestMethod.POST)
+    public String deletespot(
+            @PathVariable("code") String code,
+            Model model,
+            Principal principal) {
+        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
+        String username = token.getName();
+        SpotService service = appContext.getBean(SpotService.class);
+        LogService logService = appContext.getBean(LogService.class);
+
+        try {
+            service.deleteSpot(code);
+        }catch (Exception e)
+        {
+            model.addAttribute("message", e.getMessage());
+            return "adminmessage";
+        }
+        model.addAttribute("message", "loviste uspesne odstraneno");
+        logService.saveLog(username,"removed spot code "+ code );
+        return "adminmessage";
+    }
+
     @RequestMapping(value = "/admin/addspot", method = RequestMethod.POST)
     public String addspot(
             @RequestParam(name="code") String code,

@@ -4,6 +4,15 @@
     <title>Administrace lovišť</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 				<LINK REL=StyleSheet HREF="shreck.css" TYPE="text/css" MEDIA=screen>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script type="text/javascript">
+    $(document).on('submit', 'form[data-confirm]', function(e){
+    if(!confirm($(this).data('confirm'))){
+        e.stopImmediatePropagation();
+        e.preventDefault();
+     }
+    });
+</script>
 </head>
 <body>
 <div>
@@ -50,6 +59,9 @@
                     <td width=100 th:if="${spot.owner != null}"><span th:text="${spot.owner.username}"> Vlastník </span>
                     </td>
                     <td width=100><input type="submit" value="update"/></td>
+                </form>
+                <form th:action="@{'/admin/deletespot/'+${spot.code}}" th:object="${spot}" method="post" data-confirm="Opravdu chceš smazat loviště?">
+                    <td width=100><input type="submit" value="SMAZAT"/></td>
                 </form>
             </tr>
             <tr th:each="pwning : ${spot.pwnings}">
