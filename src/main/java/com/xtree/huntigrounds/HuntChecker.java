@@ -26,14 +26,17 @@ public class HuntChecker {
                 if (!userIsOverLimit(user)) {
                     addToPwnings(pwningService, user, spot);
                     createRandevouz(spotService, spot, DURATION);
-                    model.addAttribute("message", "you are contesting for this spot");
+                    model.addAttribute("message", "jsi na seznamu útočníků, někdo si to s tebou vyřídí");
+//                    model.addAttribute("message", "you are contesting for this spot");
                     logService.saveLog(user.getUsername(), "attacks to hunting ground " + spot.getCode() + " where is registered as attacker");
                 } else {
-                    model.addAttribute("message", "you are not able to contest for another spot");
-                    logService.saveLog(user.getUsername(), "tries to claim " + spot.getCode() + " over his limit.");
+                    model.addAttribute("message", "nedokážeš útočit na více lovišť");
+//                    model.addAttribute("message", "you are not able to contest for another spot");
+                    logService.saveLog(user.getUsername(), "tried to claim " + spot.getCode() + " over his limit.");
                 }
             } else {
-                model.addAttribute("message", "your are owner of the spot");
+                model.addAttribute("message", "Jsi vlastník tohoto loviště");
+//                model.addAttribute("message", "your are owner of the spot");
                 logService.saveLog(user.getUsername(), "attacks his own hunting ground " + spot.getCode());
             }
         } else {
@@ -46,7 +49,8 @@ public class HuntChecker {
                     removePwnings(pwningService, spot);
                     //add this user as owner
                     setNewOwner(spotService, user, spot);
-                    model.addAttribute("message", "you have won this spot");
+                    model.addAttribute("message", "vyhrál jsi boj o toto loviště");
+//                    model.addAttribute("message", "you have won this spot");
                     logService.saveLog(user.getUsername(), "becames owner of " + spot.getCode());
                 } else {
                     //remove pwnings
@@ -56,11 +60,12 @@ public class HuntChecker {
                         addToPwnings(pwningService, user, spot);
                         //create randevouz
                         createRandevouz(spotService, spot, DURATION);
-                        model.addAttribute("message", "new contest started, you are contesting for this spot ");
+                        model.addAttribute("message", "nová bitva začala, jsi na seznamu útočníků ");
+//                        model.addAttribute("message", "new contest started, you are contesting for this spot ");
                         logService.saveLog(user.getUsername(), "starts new hunt for " + spot.getCode());
                     } else {
-                        model.addAttribute("message", "you are not able to contest for another spot");
-                        logService.saveLog(user.getUsername(), "tries to claim " + spot.getCode() + " over his limit and break the contest for the spot. ");
+                        model.addAttribute("message", "nedokážeš útočit na více lovišť");
+                        logService.saveLog(user.getUsername(), "tried to claim " + spot.getCode() + " over his limit and break the contest for the spot. ");
                     }
                 }
             } else {
@@ -68,10 +73,10 @@ public class HuntChecker {
                     //randevouz is valid (is not in past)
                     if (!containOrOwner(spot, user)) {
                         addToPwnings(pwningService, user, spot);
-                        model.addAttribute("message", "you are contesting for this spot");
+                        model.addAttribute("message", "jsi na seznamu útočníků, někdo si to s tebou vyřídí");
                         logService.saveLog(user.getUsername(), "added to hunt for " + spot.getCode());
                     } else {
-                        model.addAttribute("message", "you are contesting for this spot yet");
+                        model.addAttribute("message", "už jsi na seznamu útočníků");
                         logService.saveLog(user.getUsername(), "attacks to hunting ground " + spot.getCode() + " where is registered as attacker (2)");
                     }
                 } else {
@@ -81,14 +86,14 @@ public class HuntChecker {
                         if (!userIsOverLimit(user)) {
                             addToPwnings(pwningService, user, spot);
                             createRandevouz(spotService, spot, DURATION);
-                            model.addAttribute("message", "you are contesting for this spot");
+                            model.addAttribute("message", "jsi na seznamu útočníků, někdo si to s tebou vyřídí");
                             logService.saveLog(user.getUsername(), "attacks to hunting ground " + spot.getCode() + " where is registered as attacker");
                         } else {
-                            model.addAttribute("message", "you are not able to contest for another spot");
+                            model.addAttribute("message", "nedokážeš útočit na více lovišť");
                             logService.saveLog(user.getUsername(), "tries to claim " + spot.getCode() + " over his limit.");
                         }
                     } else {
-                        model.addAttribute("message", "your are owner of the spot");
+                        model.addAttribute("message", "Jsi vlastník tohoto loviště");
                         logService.saveLog(user.getUsername(), "attacks his own hunting ground " + spot.getCode());
                     }
                 }
