@@ -59,7 +59,7 @@
 				<td width=100 class="warning">
 						<input type="submit" value="update"/>
 			</form>						
-						<div  th:if="${spot.owner == null} and ${spot.randevouz != null}"> /
+						<div  th:if="${spot.owner == null} and ${spot.randevouz == null}"> /
 							<form th:action="@{'/admin/deletespot/'+${spot.code}}" th:object="${spot}" method="post" data-confirm="Opravdu chceš smazat loviště?">
                <input type="submit" value="SMAZAT"/>
 							</form>
@@ -87,6 +87,7 @@
 </table>
 <br>
 <font size="+1"> Přidat loviště </font> 
+<br>
 <br>
 <form th:action="@{/admin/addspot}" method="post">
     Kód:<input type="text" name="code">
