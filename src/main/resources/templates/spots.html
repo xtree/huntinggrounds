@@ -71,6 +71,7 @@
 					<tbody>
 						<tr th:each="pwning : ${spot.pwnings}">
 							<td width=100></td>
+							<td><span th:text="${pwning.user.username}"> username </span></td>
 						</tr>
 					</tbody>
 				</table>
