@@ -35,11 +35,12 @@
 				<th> Akce</th>
 				<th> Čas záboru </th>
 				<th> Vlastník / Zabírající  </th>
+				<th> Smazat</th>
     </tr>
     </thead>
     <tbody>
     <tr th:if="${spots.empty}">
-        <td colspan="9"> Loviště nejsou</td>
+        <td colspan="10"> Loviště nejsou</td>
     </tr>
     <tr th:each="spot : ${spots}">
 			<td width=150><span th:text="${spot.code}"></span></td>
@@ -56,14 +57,9 @@
 				<td width=200>
 						<input type="text" name="description" th:value="${spot.description}">
 				</td>
-				<td width=100 class="warning">
+				<td width=100 class="akce">
 						<input type="submit" value="update"/>
 			</form>						
-						<div  th:if="${spot.owner == null} and ${spot.randevouz == null}"> /
-							<form th:action="@{'/admin/deletespot/'+${spot.code}}" th:object="${spot}" method="post" data-confirm="Opravdu chceš smazat loviště?">
-               <input type="submit" value="SMAZAT"/>
-							</form>
-						</div>
 				</td>
 				<td width=150 th:if="${spot.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
 						<span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(spot.randevouz, timeZone)}"> Čas záboru </span>
@@ -81,6 +77,16 @@
 							</tr>
 						</tbody>
 					</table>
+				</td>
+				<td class="warning">
+							<div  th:if="${spot.owner == null} and ${spot.randevouz == null}"> /
+							<form th:action="@{'/admin/deletespot/'+${spot.code}}" th:object="${spot}" method="post" data-confirm="Opravdu chceš smazat loviště?">
+               <input type="submit" value="SMAZAT"/>
+							</form>
+							<div  th:if="${spot.owner != null} or ${spot.randevouz != null}">
+								Nelze, je vlastěné nebo zabírané.
+							</div>
+						</div>
 				</td>
 		</tr>
   </tbody>

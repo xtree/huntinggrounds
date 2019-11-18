@@ -32,6 +32,9 @@ td.spot {
 td.warning {
 	background-color: red;
 }
+td.akce {
+	background-color: grey;
+}
 td#druh
     {
     color: red;
