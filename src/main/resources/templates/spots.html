@@ -40,42 +40,45 @@
         <td colspan="7"> Loviště nejsou</td>
     </tr>
     <tr th:each="spot : ${spots}">
-			<td width=150><span th:text="${spot.code}"> Kód </span></td>
-			<form th:action="@{'/admin/changespot/'+${spot.code}}" th:object="${spot}" method="post">
-				<td width=50>
-						<input type="text" name="might" th:value="${spot.might}">
-				</td>
-				<td width=150>
-						<input type="text" name="place" th:value="${spot.address}">
-				</td>
-        <td width=20>
-            <input type="checkbox" name="enabled" th:checked="${spot.enabled}">
-        </td>				
-				<td width=200>
-						<input type="text" name="description" th:value="${spot.description}">
-				</td>
-				<td width=150 th:if="${spot.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
-						<span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(spot.randevouz, timeZone)}"> Čas záboru </span>
-				</td>
-				<td width=150 th:if="${spot.randevouz == null}">
-             Zábor neprobíhá
-        </td>
-				<td width=100 th:if="${spot.owner != null}"><span th:text="${spot.owner.username}"> Vlastník </span>
-				</td>
-				<td width=100><input type="submit" value="update"/></td>
-			</form>
-		</tr>
-		<tr>
-			<td colspan="7">
-				<table>
-					<tbody>
-						<tr th:each="pwning : ${spot.pwnings}">
-							<td width=100></td>
-							<td><span th:text="${pwning.user.username}"> username </span></td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
+			<table class="inner">
+				<tr>
+					<td width=150><span th:text="${spot.code}"> Kód </span></td>
+					<form th:action="@{'/admin/changespot/'+${spot.code}}" th:object="${spot}" method="post">
+						<td width=50>
+								<input type="text" name="might" th:value="${spot.might}">
+						</td>
+						<td width=150>
+								<input type="text" name="place" th:value="${spot.address}">
+						</td>
+						<td width=20>
+								<input type="checkbox" name="enabled" th:checked="${spot.enabled}">
+						</td>				
+						<td width=200>
+								<input type="text" name="description" th:value="${spot.description}">
+						</td>
+						<td width=150 th:if="${spot.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
+								<span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(spot.randevouz, timeZone)}"> Čas záboru </span>
+						</td>
+						<td width=150 th:if="${spot.randevouz == null}">
+								 Zábor neprobíhá
+						</td>
+						<td width=100 th:if="${spot.owner != null}"><span th:text="${spot.owner.username}"> Vlastník </span>
+						</td>
+						<td width=100><input type="submit" value="update"/></td>
+					</form>
+					</tr><tr>
+					<td colspan="7">
+						<table>
+							<tbody>
+								<tr th:each="pwning : ${spot.pwnings}">
+									<td width=100></td>
+									<td><span th:text="${pwning.user.username}"> username </span></td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</table>
 		</tr>
   </tbody>
 </table>

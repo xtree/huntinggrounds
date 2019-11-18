@@ -3,7 +3,9 @@ table {
     border-style: inset;
     border-width: thin;
     background: url(back.jpg);
- 
+    }
+table.inner {
+    border-color: black;
     }
 table#header {
     border-color: black;
