@@ -37,7 +37,7 @@
     </thead>
     <tbody>
     <tr th:if="${spots.empty}">
-        <td colspan="6"> Loviště nejsou</td>
+        <td colspan="7"> Loviště nejsou</td>
     </tr>
     <tr th:each="spot : ${spots}">
 			<td width=150><span th:text="${spot.code}"> Kód </span></td>
@@ -66,15 +66,11 @@
 			</form>
 		</tr>
 		<tr>
-			<td colspan="6">
+			<td colspan="7">
 				<table>
 					<tbody>
-						<tr th:if="${spot.pwnings.empty}">
-							<td></td>
-						</tr>
 						<tr th:each="pwning : ${spot.pwnings}">
 							<td width=100></td>
-							<td><span th:text="${pwning.user.username}"> username </span></td>
 						</tr>
 					</tbody>
 				</table>
