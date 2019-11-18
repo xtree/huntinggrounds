@@ -17,7 +17,13 @@
 
 <body>
 <div align="center">
-<p th:text="'Ahoj, ' + ${hunter.username}" />
+<p th:text="' ... ' + ${hunter.username} + ' ... '" />
+<br>
+<font size="+2">Tvá loviště a moc.</font>
+<br />
+<br />
+<p th:text="'Tvůj limit na počet lovišť (vlastněná + zabíraná):  _' + ${hunter.limit}" + '_'"/>
+<br />
 
 <div th:if="${message}">
     <p th:text="${message}" />
@@ -69,10 +75,9 @@
     </tr>
     </tbody>
 </table>
-<p th:text="'Tvůj limit na počet lovišť (vlastněná + zabíraní)' + ${hunter.limit}"/>
 
 <br / >
-<p th:text="'Máš have ' + ${hunter.might} + ' bodů moci'" />
+<p th:text="'Máš ' + ${hunter.might} + ' bodů moci'" />
 <form  th:if="${ !hunter.spotsOwned.empty}" th:action="@{'/lowermight'}" method="post" data-confirm="Jsi si jistá/ý že chceš výměnu provést?">
 		<p th:text="'Možno proměnit za eura v poměru' + ${hunter.exchange_rate} + 'moc/euro' "/>
     <input type="text" name="exchanged_might" th:value="${hunter.might}">
