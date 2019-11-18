@@ -7,13 +7,9 @@
 </head>
 <body>
 <div align = "center">
-<p th:text="
-'Ahoj, ' + ${name} + ' jsi na lovišti '+
- ${spot.code} + ' které produkuje <br>' +
- ${spot.might} + ' bodů moci za den <br>' +
- ${spot.address} + '<br>' +
- ${spot.description}
-" />
+<table><tr><td>
+<p th:text="'Ahoj, ' + ${name} + ' jsi na lovišti '+ ${spot.address} + ' které produkuje'"/>
+ <p th:text=" ${spot.might} + ' bodů moci za den <br>'" />
 <br />
 <div th:if="${owner}">
     <p th:text="'aktuální vlastník je '+${owner}" />
@@ -23,15 +19,19 @@
 </div>
 <br />
 <form th:action="@{/hunt}" method="get">
+</td></tr>
+<tr><td>
     <input type="hidden" name="code" th:value="${spot.code}" />
     <input type="submit" value="ZABRAT!"/>
+</td></tr>
 </form>
-<br />
-<br />
+<tr><td>
 <form th:action="@{/user}" method="get">
     <input type="submit" value="SRABSKY JEJ OPUSTIT"/>
 </form>
-
+</td></tr>
+</table>
+<br>
 <br>
 <a href='/'>Zpět domů</a>
 <br>
