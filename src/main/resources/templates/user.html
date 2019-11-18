@@ -72,7 +72,9 @@ Tvůj limit na počet lovišť (vlastněná + zabíraná): <br />
         <td width=150><span th:text="${pwning.code.address}"> Místo </span></td>
         <td width=50><span th:text="${pwning.code.might}"> Síla </span></td>
         <td width=200><span th:text="${pwning.code.description}"> Popis </span></td>
-        <td width=100 th:if="${pwning.code.randevouz != null}"><span th:text="${pwning.code.randevouz}"> Čas záboru </span></td>
+        <td width=100 th:if="${pwning.code.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
+            <span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(pwning.code.randevouz, timeZone)}"> Čas záboru </span>
+        </td>
     </tr>
     </tbody>
 </table>
