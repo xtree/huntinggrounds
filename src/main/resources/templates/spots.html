@@ -63,16 +63,30 @@
 				<td width=100><input type="submit" value="update"/></td>
 			</form>
 		</tr>
-
+		<tr>
+			<td colspan="6">
+				<table>
+					<tbody>
+						<tr th:if="${spot.pwnings.empty}">
+							<td></td>
+						</tr>
+						<tr th:each="pwning : ${spot.pwnings}">
+							<td width=100></td>
+							<td><span th:text="${pwning.user.username}"> username </span></td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
   </tbody>
 </table>
 <br>
 <br>
 <form th:action="@{/admin/addspot}" method="post">
-    <input type="text" name="code">
-    <input type="text" name="might">
-    <input type="text" name="address">
-    <input type="text" name="description">
+    Kód:<input type="text" name="code">
+    Síla:<input type="text" name="might">
+    Adresa:<input type="text" name="address">
+    Popis:<input type="text" name="description">
     <input type="submit" value="add spot"/>
 </form>
 <br>
