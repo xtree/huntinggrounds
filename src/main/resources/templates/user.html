@@ -25,12 +25,19 @@
 
 <p >Loviště vlastněná:</p>
 <table>
+				<thead>
+						<tr>
+							<th> Síla </th>
+							<th> Místo </th>							
+							<th> Popis </th>
+							<th> Čas případného záboru </th>
+						</tr>
+				</thead>
     <tbody>
     <tr th:if="${hunter.spotsOwned.empty}">
-        <td colspan="2"> Nic nemáš!</td>
+        <td colspan="4" align="center"> Nic nemáš!</td>
     </tr>
     <tr th:each="spot : ${hunter.spotsOwned}">
-        <td width=100><span th:text="${spot.code}"> Kód </span></td>
         <td width=50><span th:text="${spot.might}"> Síla </span></td>
         <td width=150><span th:text="${spot.address}"> Místo </span></td>
         <td width=200><span th:text="${spot.description}"> Popis </span></td>
@@ -43,8 +50,16 @@
 <p>Loviště zabíraná:</p>
 <table>
     <tbody>
+				<thead>
+						<tr>
+							<th> Místo </th>
+							<th> Síla </th>
+							<th> Popis </th>
+							<th> Čas záboru </th>
+						</tr>
+				</thead>
     <tr th:if="${hunter.pwnings.empty}">
-        <td colspan="2"> Nic takového se neděje.</td>
+        <td colspan="4"> Nic takového se neděje.</td>
     </tr>
     <tr th:each="pwning : ${hunter.pwnings}">
         <td width=150><span th:text="${pwning.code.address}"> Místo </span></td>
@@ -54,12 +69,12 @@
     </tr>
     </tbody>
 </table>
-<p th:text="'Můžeš vlastnit a zabírat úhrně maximálně ' + ${hunter.limit} + 'lovišť'"/>
+<p th:text="'Tvůj limit na počet lovišť (vlastněná + zabíraní)' + ${hunter.limit}"/>
 
 <br / >
 <p th:text="'Máš have ' + ${hunter.might} + ' bodů moci'" />
-<p th:text="'Možno proměnit za eura v poměru' + ${hunter.exchange_rate} + 'moc/euro' "/>
 <form  th:if="${ !hunter.spotsOwned.empty}" th:action="@{'/lowermight'}" method="post" data-confirm="Jsi si jistá/ý že chceš výměnu provést?">
+		<p th:text="'Možno proměnit za eura v poměru' + ${hunter.exchange_rate} + 'moc/euro' "/>
     <input type="text" name="exchanged_might" th:value="${hunter.might}">
     <input type="submit" value="Provést výměnu"/>
 </form>
