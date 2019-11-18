@@ -56,8 +56,14 @@
 				<td width=200>
 						<input type="text" name="description" th:value="${spot.description}">
 				</td>
-				<td width=100>
+				<td width=100 class="warning">
 						<input type="submit" value="update"/>
+			</form>						
+						<div th:if="${spot.owner == null}">
+							<form th:action="@{'/admin/deletespot/'+${spot.code}}" th:object="${spot}" method="post" data-confirm="Opravdu chceš smazat loviště?">
+                <td width=100><input type="submit" value="SMAZAT"/></td>
+							</form>
+						</div>
 				</td>
 				<td width=150 th:if="${spot.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
 						<span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(spot.randevouz, timeZone)}"> Čas záboru </span>
@@ -76,7 +82,6 @@
 						</tbody>
 					</table>
 				</td>
-			</form>
 		</tr>
   </tbody>
 </table>
