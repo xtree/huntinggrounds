@@ -17,7 +17,9 @@
 <body>
 <div align="center">
 <p th:text="'Přihlášen administrátor: ' + ${name} + '!'"/>
-
+<br><br>
+<font size="+2"> Seznam lovišť </font> 
+<br><br>
 <div th:if="${message}">
     <p th:text="${message}"/>
 </div>
@@ -92,6 +94,8 @@
 <br>
 <br>
 <a href='/admin'>Domů</a>
+<br>
+<br>
 <br>
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Odhlásit se"/>
