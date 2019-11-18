@@ -34,7 +34,7 @@
         <th> Popis</th>
 				<th> Akce</th>
 				<th> Čas záboru </th>
-				<th> Vlastník + Zabírající  </th>
+				<th> Vlastník / Zabírající  </th>
     </tr>
     </thead>
     <tbody>
@@ -66,7 +66,8 @@
              Zábor neprobíhá
         </td>
 				<td width=100>
-					<div th:if="${spot.owner != null}"><span th:text="${spot.owner.username}"> Vlastník </span> </div>
+					<div th:if="${spot.owner != null}"><span th:text="${spot.owner.username}"> </span> </div>
+					<div th:if="${spot.owner == null}"> Nemá vlastníka </div>
 					<table class="inner">
 						<tbody>
 							<tr >
