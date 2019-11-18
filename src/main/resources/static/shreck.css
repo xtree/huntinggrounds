@@ -1,7 +1,7 @@
 table {
     border-color: black;
     border-style: inset;
-    border-width: thick;
+    border-width: thin;
     background: url(back.jpg);
  
     }
