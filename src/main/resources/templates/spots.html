@@ -55,6 +55,9 @@
 				<td width=150 th:if="${spot.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
 						<span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(spot.randevouz, timeZone)}"> Čas záboru </span>
 				</td>
+				<td width=150 th:if="${spot.randevouz == null}">
+             Zábor neprobíhá
+        </td>
 				<td width=100 th:if="${spot.owner != null}"><span th:text="${spot.owner.username}"> Vlastník </span>
 				</td>
 				<td width=100><input type="submit" value="update"/></td>
