@@ -25,6 +25,8 @@ a:visited { color: #eeffaa }
 td {
     border: thin dotted green; 
 }
+td.spot {
+}
 td#druh
     {
     color: red;
