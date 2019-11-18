@@ -24,6 +24,9 @@ public class Spot {
     @Column(name = "randevouz")
     private Date randevouz;
 
+    @Column(name = "enabled")
+    private boolean enabled;
+
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="owner")
     private User owner;
@@ -79,6 +82,14 @@ public class Spot {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Set<Pwning> getPwnings() {

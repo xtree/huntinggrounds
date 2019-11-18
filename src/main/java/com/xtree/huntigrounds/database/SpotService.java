@@ -1,6 +1,7 @@
 package com.xtree.huntigrounds.database;
 
 import com.xtree.huntigrounds.data.Spot;
+import com.xtree.huntigrounds.data.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,11 @@ public class SpotService {
         return spotRepository.findByCode(code);
     }
 
-    public void modifySpot(int might, String place, String description, String code){
-        spotRepository.setPlaceDetailsByCode(might,place,description,code);
+    public void modifySpot(int might, String place, String description, boolean enabled, User user, String code){
+        spotRepository.setPlaceDetailsByCode(might,place,description, enabled, user, code);
+    }
+
+    public void deleteSpot(String code){
+        spotRepository.deleteByCode(code);
     }
 }

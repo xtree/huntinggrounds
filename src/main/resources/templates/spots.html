@@ -4,6 +4,15 @@
     <title>Administrace lovišť</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 				<LINK REL=StyleSheet HREF="shreck.css" TYPE="text/css" MEDIA=screen>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script type="text/javascript">
+    $(document).on('submit', 'form[data-confirm]', function(e){
+    if(!confirm($(this).data('confirm'))){
+        e.stopImmediatePropagation();
+        e.preventDefault();
+     }
+    });
+</script>
 </head>
 <body>
 <div>
@@ -41,12 +50,21 @@
                     <td width=200>
                         <input type="text" name="description" th:value="${spot.description}">
                     </td>
+                    <td width=20>
+                        <input type="checkbox" name="enabled" th:checked="${spot.enabled}">
+                    </td>
                     <td width=150 th:if="${spot.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
                         <span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(spot.randevouz, timeZone)}"> Čas záboru </span>
                     </td>
-                    <td width=100 th:if="${spot.owner != null}"><span th:text="${spot.owner.username}"> Vlastník </span>
+<!--                    <td width=100 name="owner" th:if="${spot.owner != null}"><span th:text="${spot.owner.username}"> Vlastník </span>-->
+<!--                    </td>-->
+                    <td width=100>
+                        <input type="text" name="owner" th:value="${spot.owner?.username}">
                     </td>
                     <td width=100><input type="submit" value="update"/></td>
+                </form>
+                <form th:action="@{'/admin/deletespot/'+${spot.code}}" th:object="${spot}" method="post" data-confirm="Opravdu chceš smazat loviště?">
+                    <td width=100><input type="submit" value="SMAZAT"/></td>
                 </form>
             </tr>
             <tr th:each="pwning : ${spot.pwnings}">
