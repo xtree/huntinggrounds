@@ -3,20 +3,11 @@
 <head>
     <title>Administrace lovišť</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-				<LINK REL=StyleSheet HREF="shreck.css" TYPE="text/css" MEDIA=screen>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script type="text/javascript">
-    $(document).on('submit', 'form[data-confirm]', function(e){
-    if(!confirm($(this).data('confirm'))){
-        e.stopImmediatePropagation();
-        e.preventDefault();
-     }
-    });
-</script>
+				<LINK REL=StyleSheet HREF="../shreck.css" TYPE="text/css" MEDIA=screen>
 </head>
 <body>
-<div>
-<p th:text="'Přihlášen admin, ' + ${name} + '!'"/>
+<div align="center">
+<p th:text="'Přihlášen administrátor: ' + ${name} + '!'"/>
 
 <div th:if="${message}">
     <p th:text="${message}"/>
@@ -29,53 +20,49 @@
         <th> Síla</th>
         <th> Adresa</th>
         <th> Popis</th>
+				<th> Čas záboru </th>
     </tr>
     </thead>
     <tbody>
     <tr th:if="${spots.empty}">
-        <td colspan="2"> Loviště nejsou</td>
+        <td colspan="5"> Loviště nejsou</td>
     </tr>
     <tr th:each="spot : ${spots}">
-        <table>
-            <tbody>
-            <tr>
-                <td width=100><span th:text="${spot.code}"> Kód </span></td>
-                <form th:action="@{'/admin/changespot/'+${spot.code}}" th:object="${spot}" method="post">
-                    <td width=50>
-                        <input type="text" name="might" th:value="${spot.might}">
-                    </td>
-                    <td width=150>
-                        <input type="text" name="place" th:value="${spot.address}">
-                    </td>
-                    <td width=200>
-                        <input type="text" name="description" th:value="${spot.description}">
-                    </td>
-                    <td width=20>
-                        <input type="checkbox" name="enabled" th:checked="${spot.enabled}">
-                    </td>
-                    <td width=150 th:if="${spot.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
-                        <span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(spot.randevouz, timeZone)}"> Čas záboru </span>
-                    </td>
-<!--                    <td width=100 name="owner" th:if="${spot.owner != null}"><span th:text="${spot.owner.username}"> Vlastník </span>-->
-<!--                    </td>-->
-                    <td width=100>
-                        <input type="text" name="owner" th:value="${spot.owner?.username}">
-                    </td>
-                    <td width=100><input type="submit" value="update"/></td>
-                </form>
-                <form th:action="@{'/admin/deletespot/'+${spot.code}}" th:object="${spot}" method="post" data-confirm="Opravdu chceš smazat loviště?">
-                    <td width=100><input type="submit" value="SMAZAT"/></td>
-                </form>
-            </tr>
-            <tr th:each="pwning : ${spot.pwnings}">
-                <td width=100></td>
-                <td><span th:text="${pwning.user.username}"> username </span></td>
-            </tr>
-            </tbody>
-        </table>
-    </tr>
-    </tbody>
+			<td width=150><span th:text="${spot.code}"> Kód </span></td>
+			<form th:action="@{'/admin/changespot/'+${spot.code}}" th:object="${spot}" method="post">
+				<td width=50>
+						<input type="text" name="might" th:value="${spot.might}">
+				</td>
+				<td width=150>
+						<input type="text" name="place" th:value="${spot.address}">
+				</td>
+				<td width=200>
+						<input type="text" name="description" th:value="${spot.description}">
+				</td>
+				<td width=150 th:if="${spot.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
+						<span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(spot.randevouz, timeZone)}"> Čas záboru </span>
+				</td>
+				<td width=100 th:if="${spot.owner != null}"><span th:text="${spot.owner.username}"> Vlastník </span>
+				</td>
+				<td width=100><input type="submit" value="update"/></td>
+			</form>
+		</tr>
+		<tr>
+			<td colspan = 5>
+				<table>
+					<tbody>
+						<tr th:each="pwning : ${spot.pwnings}">
+							<td width=100></td>
+							<td><span th:text="${pwning.user.username}"> username </span></td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+  </tbody>
 </table>
+<br>
+<br>
 <form th:action="@{/admin/addspot}" method="post">
     <input type="text" name="code">
     <input type="text" name="might">
@@ -83,14 +70,14 @@
     <input type="text" name="description">
     <input type="submit" value="add spot"/>
 </form>
-
+<br>
 <br>
 <a href='/admin'>Domů</a>
 <br>
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Odhlásit se"/>
 </form>
-<img style="border:0" src="img/moths.png" alt="No rest for the wicked." title="No rest for the wicked.">
+<img style="border:0" src="../img/moths.png" alt="No rest for the wicked." title="No rest for the wicked.">
 </div>
 </body>
 </html>
