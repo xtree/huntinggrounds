@@ -51,8 +51,8 @@ public class UserEndpointController {
         if ((user.getMight() > loweredMight) && (loweredMight >= 0)) {
             user.setMight(user.getMight() - loweredMight);
             service.saveUser(user);
-            logService.saveLog(user.getUsername(), "exchanged "+loweredMight+ " might units for " + loweredMight / user.getExchange_rate() +" euros");
-            model.addAttribute("message", "Právě jsi vyměnil "+loweredMight+ " bodů moci za " + loweredMight / user.getExchange_rate() +" eur");
+            logService.saveLog(user.getUsername(), "exchanged "+loweredMight+ " might units for " + loweredMight / user.getExchange_rate() +" Pounds");
+            model.addAttribute("message", "Právě jsi vyměnil "+loweredMight+ " bodů moci za " + loweredMight / user.getExchange_rate() +" Liber");
         } else
         {
             logService.saveLog(user.getUsername(), "tried to exchange " + exchangedMight );
