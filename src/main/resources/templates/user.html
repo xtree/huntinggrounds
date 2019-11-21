@@ -88,6 +88,24 @@ Tvůj limit na počet lovišť (vlastněná + zabíraná): <br />
 </form>
 
 <br / >
+<table><tr><td align="center" colspan=2 ><font size="+1">Změnit heslo</font><br><br></td></tr>
+<form th:action="@{/passchange}" method="post">
+	<tr><td align="center" colspan=2>
+		Staré heslo:<input type="text" name="old_pass"><br><br>
+		</td></tr>
+		<tr><td align="center">
+		Nové heslo:<input type="text" name="new_pass"> <br><br>
+		</td>
+		<td align="center">
+		Nové heslo znovu:<input type="text" name="new_pass_two"> <br><br>
+		</td></tr>
+		<tr><td align="center" colspan=2>
+    <input type="submit" value="Změnit"/>
+		</td></tr>
+</form>
+</td></tr></table>
+<br>
+<br>
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Odhlásit se"/>
 </form>
