@@ -15,8 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sun.util.calendar.ZoneInfo;
 
 import java.security.Principal;
+import java.sql.Timestamp;
 
 @Controller
 public class UserEndpointController {
@@ -70,6 +72,32 @@ public class UserEndpointController {
         SpotService spotService = appContext.getBean(SpotService.class);
         User user = userService.getUser(username);
         Spot spot = spotService.getSpot(code);
+        for (Pwning p : spot.getPwnings()){
+            if (p.getUser() == user){
+                model.addAttribute(
+                        "message",
+                        "O toto loviště už soupeříš, souboj bude v "
+                                + Renderer.getTime(
+                                        new Timestamp(spot.getRandevouz().getTime()),
+                                        (ZoneInfo) ZoneInfo.getTimeZone("CET")
+                        )
+                );
+                model.addAttribute("competitor", true);
+                break;
+            }
+        }
+        if (user == spot.getOwner())
+        {
+            model.addAttribute(
+                    "message",
+                    "Tvé loviště je napadeno, souboj bude v "
+                            + Renderer.getTime(
+                            new Timestamp(spot.getRandevouz().getTime()),
+                            (ZoneInfo) ZoneInfo.getTimeZone("CET")
+                    )
+            );
+            model.addAttribute("competitor", true);
+        }
 
         model.addAttribute("name", user.getUsername());
         model.addAttribute("spot", spot);
