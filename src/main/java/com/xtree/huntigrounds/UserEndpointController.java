@@ -128,6 +128,41 @@ public class UserEndpointController {
         return "spot";
     }
 
+    @RequestMapping(value={"passchange"})
+    public String passChange(@RequestParam(name = "old_pass") String oldPass,
+                             @RequestParam(name = "new_pass") String newPass,
+                             @RequestParam(name = "new_pass_two") String newPassTwo,
+                             Model model, Principal principal) {
+        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
+        String username = token.getName();
+        UserService service = appContext.getBean(UserService.class);
+        LogService logService = appContext.getBean(LogService.class);
+
+        User user = service.getUser(username);
+
+        if (service.checkPassword(oldPass,user.getPassword())) {
+            if (newPass != null &&
+                    newPass.length() > 0 &&
+                    newPass.equals(newPassTwo)
+            ) {
+                user.setPassword(newPass);
+                service.saveUser(user);
+                model.addAttribute("message", "Heslo úspěšně změněno.");
+                logService.saveLog(username, " changed his password");
+
+            } else {
+                model.addAttribute("message", "nove heslo nesouhlasi");
+                logService.saveLog(username, " tried to change the password");
+            }
+        } else {
+            model.addAttribute("message", "stare heslo nesouhlasi");
+            logService.saveLog(username, " tried to change the password");
+        }
+        model.addAttribute("name", username);
+        model.addAttribute("hunter", user);
+        return "user";
+    }
+
 
 
 

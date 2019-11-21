@@ -42,4 +42,9 @@ public class UserService {
     public void setMightLimitById(int might,int limit, long id) {
         userRepository.setUserMightLimitById(might,limit,id);
     }
+
+    public boolean checkPassword(String password, String encoded){
+        return bCryptPasswordEncoder.matches(password, encoded);
+    }
+
 }
