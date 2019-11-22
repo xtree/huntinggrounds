@@ -14,7 +14,7 @@ import java.time.Instant;
 
 public class HuntChecker {
 
-    public static final Duration DURATION = Duration.ofHours(1); //temporary, need to be set to 24
+    public static final Duration DURATION = Duration.ofDays(1);
 
     void doEverythig(Model model, SpotService spotService, PwningService pwningService, LogService logService, User user, Spot spot) {
 

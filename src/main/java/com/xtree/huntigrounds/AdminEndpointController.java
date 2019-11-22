@@ -111,16 +111,21 @@ public class AdminEndpointController {
             @PathVariable("id") long id,
             @RequestParam(name="might") int might,
             @RequestParam(name="limit") int limit,
+            @RequestParam(name="exchange_rate") int rate,
             Model model,
             Principal principal) {
         UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
         String username = token.getName();
         UserService service = appContext.getBean(UserService.class);
         LogService logService = appContext.getBean(LogService.class);
-        if (might > 0 && limit > 0) {
+        if (might >= 0 && limit >= 0 && rate > 0) {
             try {
+                User user = service.getUser(id);
+                user.setMight(might);
+                user.setLimit(limit);
+                user.setExchange_rate(rate);
                 service.setMightLimitById(might,limit, id);
-                model.addAttribute("message", "new might set");
+                model.addAttribute("message", "new attributes set");
             } catch (Exception e) {
                 model.addAttribute("message", e.getMessage());
             }
@@ -130,7 +135,7 @@ public class AdminEndpointController {
         }
         model.addAttribute("name", username);
         model.addAttribute("users",service.allUsers());
-        logService.saveLog(username,"sets might and limit for userid "+ id + " might: "+ might + " limit: "+limit );
+        logService.saveLog(username,"sets attributes for userid "+ id + " might: "+ might + " limit: "+limit + " rate: "+rate);
         return "users";
     }
 
