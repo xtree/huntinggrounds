@@ -51,7 +51,7 @@
             </form>					
             <form  th:action="@{'/admin/deleteuser/'+${hunter.id}}" th:object="${hunter}" method="post"  data-confirm="Opravdu Chceš smazat uživatele?">
                <td class="warning" th:if="${hunter.pwnings.empty}" width=100><input type="submit" value="SMAZAT"/></td>
-							 <td th:if="${!hunter.pwnings.empty}" width=100 class="delete">Nelze smazat, něco zabírá</td>
+							 <td th:if="${!hunter.pwnings.empty} or ${!hunter.owner.empty}" width=100 class="delete">Nelze smazat, něco zabírá</td>
              </form>				
 						 <form th:action="@{'/admin/changepassuser/'+${hunter.id}}" th:object="${hunter}" method="post">
 							<td width=100>
