@@ -34,8 +34,8 @@ Tvůj limit na počet lovišť (vlastněná + zabíraná): <br />
 <table>
 				<thead>
 						<tr>
-							<th> Síla </th>
 							<th> Místo </th>							
+							<th> Výnos moc/den </th>							
 							<th> Popis </th>
 							<th> Čas případného záboru </th>
 						</tr>
@@ -45,7 +45,7 @@ Tvůj limit na počet lovišť (vlastněná + zabíraná): <br />
         <td colspan="4" align="center"> Nic nemáš!</td>
     </tr>
     <tr th:each="spot : ${hunter.spotsOwned}">
-        <td width=50><span th:text="${spot.might}"> Síla </span></td>
+        <td width=50><span th:text="${spot.might}"> Výnos moc/den </span></td>
         <td width=150><span th:text="${spot.address}"> Místo </span></td>
         <td width=200><span th:text="${spot.description}"> Popis </span></td>
         <td width=100 th:if="${spot.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
@@ -60,7 +60,7 @@ Tvůj limit na počet lovišť (vlastněná + zabíraná): <br />
 				<thead>
 						<tr>
 							<th> Místo </th>
-							<th> Síla </th>
+							<th> Výnos moc/den </th>
 							<th> Popis </th>
 							<th> Čas záboru </th>
 						</tr>
@@ -70,7 +70,7 @@ Tvůj limit na počet lovišť (vlastněná + zabíraná): <br />
     </tr>
     <tr th:each="pwning : ${hunter.pwnings}">
         <td width=150><span th:text="${pwning.code.address}"> Místo </span></td>
-        <td width=50><span th:text="${pwning.code.might}"> Síla </span></td>
+        <td width=50><span th:text="${pwning.code.might}"> Výnos moc/den </span></td>
         <td width=200><span th:text="${pwning.code.description}"> Popis </span></td>
         <td width=100 th:if="${pwning.code.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
             <span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(pwning.code.randevouz, timeZone)}"> Čas záboru </span>
@@ -82,7 +82,7 @@ Tvůj limit na počet lovišť (vlastněná + zabíraná): <br />
 <br / >
 <p th:text="'Máš ' + ${hunter.might} + ' bodů moci'" />
 <form  th:if="${ !hunter.spotsOwned.empty}" th:action="@{'/lowermight'}" method="post" data-confirm="Jsi si jistá/ý že chceš výměnu provést?">
-		<p th:text="'Možno proměnit za Libry v poměru' + ${hunter.exchange_rate} + 'moc/Libra' "/>
+		<p th:text="'Možno proměnit za Libry v poměru' + ${hunter.exchange_rate} + ' moc/Libra' "/>
     <input type="text" name="exchanged_might" th:value="${hunter.might}">
     <input type="submit" value="Provést výměnu"/>
 </form>
