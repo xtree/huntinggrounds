@@ -47,16 +47,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http
                 .authorizeRequests()
-                .antMatchers("/*jpg","/*css","/*png","/img/**","/login*")
-                .permitAll()
-                .anyRequest().authenticated()
+//                .antMatchers("/*jpg","/*css","/*png","/img/**","/login*").permitAll()
+//                .antMatchers("/admin/**").hasAnyRole("ADMIN").anyRequest().fullyAuthenticated()
+//                .anyRequest().authenticated()
+//                .and().formLogin()
+//                .loginPage("/login").permitAll();
+
+
+                .antMatchers("/*jpg","/*css","/*png","/img/**","/login*").permitAll()
+                .and().authorizeRequests()
                 .antMatchers("/admin/**").hasAnyRole("ADMIN").anyRequest().fullyAuthenticated()
+                .and().authorizeRequests()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
-                .logout()
-                .and()
-                .authorizeRequests()
+                .logout().permitAll()
+
 
         ;
 
