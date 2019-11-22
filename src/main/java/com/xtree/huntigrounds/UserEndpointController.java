@@ -88,14 +88,22 @@ public class UserEndpointController {
         }
         if (user == spot.getOwner())
         {
-            model.addAttribute(
-                    "message",
-                    "Tvé loviště je napadeno, souboj bude v "
-                            + Renderer.getTime(
-                            new Timestamp(spot.getRandevouz().getTime()),
-                            (ZoneInfo) ZoneInfo.getTimeZone("CET")
-                    )
-            );
+            if (spot.getRandevouz() != null) {
+                model.addAttribute(
+                        "message",
+                        "Tvé loviště je napadeno, souboj bude v "
+                                + Renderer.getTime(
+                                new Timestamp(spot.getRandevouz().getTime()),
+                                (ZoneInfo) ZoneInfo.getTimeZone("CET")
+                        )
+                );
+            } else {
+                model.addAttribute(
+                        "message",
+                        "Tvé loviště"
+                        )
+                ;
+            }
             model.addAttribute("competitor", true);
         }
 
