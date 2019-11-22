@@ -82,7 +82,7 @@ Tvůj limit na počet lovišť (vlastněná + zabíraná): <br />
 <br / >
 <p th:text="'Máš ' + ${hunter.might} + ' bodů moci'" />
 <form  th:if="${ !hunter.spotsOwned.empty}" th:action="@{'/lowermight'}" method="post" data-confirm="Jsi si jistá/ý že chceš výměnu provést?">
-		<p th:text="'Možno proměnit za eura v poměru' + ${hunter.exchange_rate} + 'moc/euro' "/>
+		<p th:text="'Možno proměnit za Libry v poměru' + ${hunter.exchange_rate} + 'moc/Libra' "/>
     <input type="text" name="exchanged_might" th:value="${hunter.might}">
     <input type="submit" value="Provést výměnu"/>
 </form>

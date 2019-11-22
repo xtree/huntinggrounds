@@ -15,8 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sun.util.calendar.ZoneInfo;
 
 import java.security.Principal;
+import java.sql.Timestamp;
 
 @Controller
 public class UserEndpointController {
@@ -49,8 +51,8 @@ public class UserEndpointController {
         if ((user.getMight() > loweredMight) && (loweredMight >= 0)) {
             user.setMight(user.getMight() - loweredMight);
             service.saveUser(user);
-            logService.saveLog(user.getUsername(), "exchanged "+loweredMight+ " might units for " + loweredMight / user.getExchange_rate() +" euros");
-            model.addAttribute("message", "Právě jsi vyměnil "+loweredMight+ " bodů moci za " + loweredMight / user.getExchange_rate() +" eur");
+            logService.saveLog(user.getUsername(), "exchanged "+loweredMight+ " might units for " + loweredMight / user.getExchange_rate() +" Pounds");
+            model.addAttribute("message", "Právě jsi vyměnil "+loweredMight+ " bodů moci za " + loweredMight / user.getExchange_rate() +" Liber");
         } else
         {
             logService.saveLog(user.getUsername(), "tried to exchange " + exchangedMight );
@@ -70,6 +72,40 @@ public class UserEndpointController {
         SpotService spotService = appContext.getBean(SpotService.class);
         User user = userService.getUser(username);
         Spot spot = spotService.getSpot(code);
+        for (Pwning p : spot.getPwnings()){
+            if (p.getUser() == user){
+                model.addAttribute(
+                        "message",
+                        "O toto loviště už soupeříš, souboj bude v "
+                                + Renderer.getTime(
+                                        new Timestamp(spot.getRandevouz().getTime()),
+                                        (ZoneInfo) ZoneInfo.getTimeZone("CET")
+                        )
+                );
+                model.addAttribute("competitor", true);
+                break;
+            }
+        }
+        if (user == spot.getOwner())
+        {
+            if (spot.getRandevouz() != null) {
+                model.addAttribute(
+                        "message",
+                        "Tvé loviště je napadeno, souboj bude v "
+                                + Renderer.getTime(
+                                new Timestamp(spot.getRandevouz().getTime()),
+                                (ZoneInfo) ZoneInfo.getTimeZone("CET")
+                        )
+                );
+            } else {
+                model.addAttribute(
+                        "message",
+                        "Tvé loviště"
+                        )
+                ;
+            }
+            model.addAttribute("competitor", true);
+        }
 
         model.addAttribute("name", user.getUsername());
         model.addAttribute("spot", spot);
@@ -98,6 +134,41 @@ public class UserEndpointController {
         model.addAttribute("name", user.getUsername());
         model.addAttribute("spot", spot);
         return "spot";
+    }
+
+    @RequestMapping(value={"passchange"})
+    public String passChange(@RequestParam(name = "old_pass") String oldPass,
+                             @RequestParam(name = "new_pass") String newPass,
+                             @RequestParam(name = "new_pass_two") String newPassTwo,
+                             Model model, Principal principal) {
+        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
+        String username = token.getName();
+        UserService service = appContext.getBean(UserService.class);
+        LogService logService = appContext.getBean(LogService.class);
+
+        User user = service.getUser(username);
+
+        if (service.checkPassword(oldPass,user.getPassword())) {
+            if (newPass != null &&
+                    newPass.length() > 0 &&
+                    newPass.equals(newPassTwo)
+            ) {
+                user.setPassword(newPass);
+                service.saveUser(user);
+                model.addAttribute("message", "Heslo úspěšně změněno.");
+                logService.saveLog(username, " changed his password");
+
+            } else {
+                model.addAttribute("message", "nove heslo nesouhlasi");
+                logService.saveLog(username, " tried to change the password");
+            }
+        } else {
+            model.addAttribute("message", "stare heslo nesouhlasi");
+            logService.saveLog(username, " tried to change the password");
+        }
+        model.addAttribute("name", username);
+        model.addAttribute("hunter", user);
+        return "user";
     }
 
 
