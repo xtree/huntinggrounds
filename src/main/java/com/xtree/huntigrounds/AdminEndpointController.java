@@ -134,6 +134,30 @@ public class AdminEndpointController {
         return "users";
     }
 
+    @RequestMapping(value = "/admin/changepassuser/{id}", method = RequestMethod.POST)
+    public String changepassuser(
+            @PathVariable("id") long id,
+            @RequestParam(name="new_pass") String newPass,
+            Model model,
+            Principal principal) {
+        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
+        String username = token.getName();
+        UserService service = appContext.getBean(UserService.class);
+        LogService logService = appContext.getBean(LogService.class);
+
+        if (newPass != null && newPass.length()>0){
+            User user = service.getUser(id);
+            user.setPassword(newPass);
+            service.saveUser(user);
+        }
+
+
+        model.addAttribute("name", username);
+        model.addAttribute("users",service.allUsers());
+        logService.saveLog(username,"changed password for userid "+ id );
+        return "users";
+    }
+
     @RequestMapping(value = "/admin/deleteuser/{id}", method = RequestMethod.POST)
     public String changemight(
             @PathVariable("id") long id,
