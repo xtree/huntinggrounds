@@ -47,9 +47,10 @@
             <td width=100><br><input type="text" name="limit" th:value="${hunter.limit}"></td>
             <td width=100><br><input type="text" name="exchange_rate" th:value="${hunter.exchange_rate}"></td>
             <td width=100><input type="submit" value="Aktualizovat"/></td>
-            </form>
-            <form th:action="@{'/admin/deleteuser/'+${hunter.id}}" th:object="${hunter}" method="post"  data-confirm="Opravdu Chceš smazat uživatele?">
-               <td width=100 class="delete"><input type="submit" value="SMAZAT"/></td>
+            </form>					
+            <form  th:action="@{'/admin/deleteuser/'+${hunter.id}}" th:object="${hunter}" method="post"  data-confirm="Opravdu Chceš smazat uživatele?">
+               <td class="warning" th:if="${hunter.pwnings.empty}" width=100 class="delete"><input type="submit" value="SMAZAT"/></td>
+							 <td th:if="${!hunter.pwnings.empty}" width=100 class="delete">Nelze smazat, něco zabírá</td>
              </form>
           </tr>
 					<tr  th:if="${!hunter.pwnings.empty}">
