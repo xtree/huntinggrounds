@@ -45,8 +45,8 @@ Tvůj limit na počet lovišť (vlastněná + zabíraná): <br />
         <td colspan="4" align="center"> Nic nemáš!</td>
     </tr>
     <tr th:each="spot : ${hunter.spotsOwned}">
-        <td width=50><span th:text="${spot.might}"> Výnos moc/den </span></td>
         <td width=150><span th:text="${spot.address}"> Místo </span></td>
+				<td width=50><span th:text="${spot.might}"> Výnos moc/den </span></td>
         <td width=200><span th:text="${spot.description}"> Popis </span></td>
         <td width=100 th:if="${spot.randevouz != null}" th:with="timeZone=${T(java.util.TimeZone).getTimeZone('CET')}">
             <span th:text="${T(com.xtree.huntigrounds.Renderer).getTime(spot.randevouz, timeZone)}"> Čas záboru </span>
