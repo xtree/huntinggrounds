@@ -37,6 +37,7 @@
 							<th> poměr moc/libry </th>
 							<th> Akce </th>
 							<th> Akce </th>
+							<th> Nové heslo </th>
 						</tr>
 				</thead>
         <tbody>
@@ -51,7 +52,13 @@
             <form  th:action="@{'/admin/deleteuser/'+${hunter.id}}" th:object="${hunter}" method="post"  data-confirm="Opravdu Chceš smazat uživatele?">
                <td class="warning" th:if="${hunter.pwnings.empty}" width=100><input type="submit" value="SMAZAT"/></td>
 							 <td th:if="${!hunter.pwnings.empty}" width=100 class="delete">Nelze smazat, něco zabírá</td>
-             </form>
+             </form>				
+						 <form th:action="@{'/admin/changepassuser/'+${hunter.id}}" th:object="${hunter}" method="post">
+							<td width=100>
+								<input type="text" name="new_pass"> 
+								<input type="submit" value="Nové heslo"/>
+							</td>
+						 </form>
           </tr>
 					<tr  th:if="${!hunter.pwnings.empty}">
 						<td colspan=6>
