@@ -72,9 +72,14 @@ public class HuntChecker {
                 if (spot.getRandevouz().after(Date.from(Instant.now()))) {
                     //randevouz is valid (is not in past)
                     if (!containOrOwner(spot, user)) {
-                        addToPwnings(pwningService, user, spot);
-                        model.addAttribute("message", "jsi na seznamu útočníků, někdo si to s tebou vyřídí");
-                        logService.saveLog(user.getUsername(), "added to hunt for " + spot.getCode());
+                        if (!userIsOverLimit(user)) {
+                            addToPwnings(pwningService, user, spot);
+                            model.addAttribute("message", "jsi na seznamu útočníků, někdo si to s tebou vyřídí");
+                            logService.saveLog(user.getUsername(), "added to hunt for " + spot.getCode());
+                        } else {
+                            model.addAttribute("message", "nedokážeš útočit na více lovišť");
+                            logService.saveLog(user.getUsername(), "tries to claim " + spot.getCode() + " over his limit. (fight is prepared)");
+                        }
                     } else {
                         model.addAttribute("message", "už jsi na seznamu útočníků");
                         logService.saveLog(user.getUsername(), "attacks to hunting ground " + spot.getCode() + " where is registered as attacker (2)");
